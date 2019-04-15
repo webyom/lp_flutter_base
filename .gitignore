@@ -24,3 +24,5 @@ android/
 .ios/
 .android/
 .flutter-plugins
+
+!lib/locale/build/
