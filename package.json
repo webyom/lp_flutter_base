@@ -1,0 +1,19 @@
+{
+  "name": "lp_flutter_base",
+  "private": true,
+  "description": "lp_flutter_base",
+  "scripts": {
+    "clean": "node tool/clean.js",
+    "build": "flutter packages pub run build_runner build",
+    "locale": "node tool/locale.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^3.9.0",
+    "gulp-html-i18n": "^0.15.0",
+    "require-all": "^2.0.0",
+    "through2": "^3.0.0",
+    "yargs": "^13.2.2"
+  }
+}
