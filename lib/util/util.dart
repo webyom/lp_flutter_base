@@ -9,6 +9,7 @@ export 'app_info.dart';
 export 'i18n.dart' show clearBaseI18nCache;
 export 'lp_http.dart';
 export 'lp_data_cache.dart';
+export 'route.dart';
 export 'toast.dart';
 
 void configDebug({

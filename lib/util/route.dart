@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hybrid_stack_manager/hybrid_stack_manager_plugin.dart';
 
-export 'package:hybrid_stack_manager/hybrid_stack_manager_plugin.dart' show HybridStackManagerPlugin;
+export 'package:hybrid_stack_manager/hybrid_stack_manager_plugin.dart' show HybridStackManagerPlugin, RouterOption;
 
 class AppRoute {
   static final GlobalKey globalKeyForRouter = GlobalKey(debugLabel: '[KWLM]');
