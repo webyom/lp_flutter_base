@@ -29,6 +29,7 @@ class LpNetworkImage extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 20.0, 0, 20.0),
               child: Image.asset(
                 'assets/images/network_image_break.png',
+                package: 'lp_flutter_base',
                 width: 90.0,
               ),
             ),

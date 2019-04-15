@@ -38,6 +38,7 @@ class _LpLoadingIconState extends State<LpLoadingIcon>
       animation: animationController,
       child: Image.asset(
         'assets/images/icon_loading_${widget.brightness == Brightness.dark ? 'dark' : 'light'}.png',
+        package: 'lp_flutter_base',
       ),
       builder: (BuildContext context, Widget widget) {
         return Transform.rotate(

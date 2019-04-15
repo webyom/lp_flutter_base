@@ -16,6 +16,7 @@ class LpError extends StatelessWidget {
         children: <Widget>[
           Image.asset(
             'assets/images/system_busy.png',
+            package: 'lp_flutter_base',
             width: 260.0,
           ),
           Center(

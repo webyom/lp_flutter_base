@@ -19,6 +19,7 @@ class LpAppBar extends AppBar {
             splashColor: Color(0x00000000),
             child: Image.asset(
               'assets/images/head_back_icon_${iconBrightness == Brightness.dark || brightness == Brightness.light && iconBrightness != Brightness.light ? "dark" : "light"}.png',
+              package: 'lp_flutter_base',
               width: 15.0,
             ),
             onPressed: () {
