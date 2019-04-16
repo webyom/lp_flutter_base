@@ -3,17 +3,14 @@
   "private": true,
   "description": "lp_flutter_base",
   "scripts": {
-    "clean": "node tool/clean.js",
+    "clean": "node node_modules/app-node-tool/lib/flutter/clean.js",
     "build": "flutter packages pub run build_runner build",
-    "locale": "node tool/locale.js"
+    "locale": "node node_modules/app-node-tool/lib/flutter/locale.js"
   },
   "dependencies": {},
   "devDependencies": {
-    "del": "^3.0.0",
+    "app-node-tool": "git+https://github.com/webyom/app-node-tool.git#v0.9.0",
     "gulp": "^3.9.0",
-    "gulp-html-i18n": "^0.15.0",
-    "require-all": "^2.0.0",
-    "through2": "^3.0.0",
-    "yargs": "^13.2.2"
+    "require-all": "^2.0.0"
   }
 }

@@ -5,7 +5,7 @@ const requireAll = require('require-all')
  *  in order to load all gulp tasks
  */
 requireAll({
-  dirname: __dirname + '/gulp',
+  dirname: __dirname + '/node_modules/app-node-tool/gulp',
   filter: /(.*)\.js$/,
   recursive: true
 });

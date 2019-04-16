@@ -1,4 +1,4 @@
-import '../util/util.dart';
+import 'package:lp_flutter_base/lp_flutter_base.dart';
 import 'build/common.dart';
 
 Map<String, LocaleGetter> _localeMap = {
@@ -26,7 +26,7 @@ String getLocaleStringByKey(String key) {
   if (parts.length <= 1) {
     return '';
   }
-  final locale = AppInfo.locale;
+  final locale = AppInfo.locale ?? '';
   final name = parts.removeAt(0);
   LocaleGetter localeGetter = _localeMap[name + '_' + locale] ?? _localeMap[name];
   if (localeGetter != null) {
