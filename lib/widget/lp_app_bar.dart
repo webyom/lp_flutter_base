@@ -5,6 +5,7 @@ import '../config.dart';
 class LpAppBar extends AppBar {
   LpAppBar({
     Key key,
+    List<Widget> actions,
     String titleText = '',
     Color titleColor,
     Color backgroundColor = Colors.white,
@@ -13,6 +14,7 @@ class LpAppBar extends AppBar {
     Brightness iconBrightness,
   }) : super(
           key: key,
+          actions: actions,
           leading: FlatButton(
             padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
             highlightColor: Color(0x00000000),
