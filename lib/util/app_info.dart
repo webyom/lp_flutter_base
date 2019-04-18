@@ -10,6 +10,7 @@ abstract class AppInfo {
   static String locale;
   static String apiBaseUrl;
   static String h5BaseUrl;
+  static String staticBaseUrl;
 
   static void config(Map appInfo) {
     final oldLocale = locale;
@@ -19,6 +20,11 @@ abstract class AppInfo {
     appChannel = appInfo['appChannel'] ?? appChannel;
     locale = appInfo['locale'] ?? locale;
     h5BaseUrl = appInfo['h5BaseUrl'] ?? h5BaseUrl;
+    if (isDebug) {
+      staticBaseUrl = 'https://statics.kreditme.id';
+    } else {
+      staticBaseUrl = 'https://statics-test.seanla.top';
+    }
     if (appInfo['apiBaseUrl'] != null) {
       LpHttp().configBaseUrl(appInfo['apiBaseUrl']);
     }
