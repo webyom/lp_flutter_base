@@ -13,6 +13,7 @@ class LpButton extends StatelessWidget {
   final double width;
   final double height;
   final double fontSize;
+  final FontWeight fontWeight;
   final bool disabled;
   final bool small;
   final bool expand;
@@ -32,6 +33,7 @@ class LpButton extends StatelessWidget {
     this.width = double.infinity,
     this.height,
     this.fontSize,
+    this.fontWeight = FontWeight.normal,
     this.disabled,
     this.small = false,
     this.expand = false,
@@ -95,6 +97,7 @@ class LpButton extends StatelessWidget {
                     style: TextStyle(
                       color: disabled == true ? Colors.white : textColor,
                       fontSize: useFontSize,
+                      fontWeight: fontWeight,
                     ),
                   ),
             ),
