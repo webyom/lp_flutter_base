@@ -81,6 +81,7 @@ class LpDialog extends StatelessWidget {
   final double titleFontSize;
   final String title;
   final Widget icon;
+  final Widget close;
   final Widget child;
   final VoidCallback onTapClose;
   final AlignmentGeometry titleAlignment;
@@ -95,6 +96,7 @@ class LpDialog extends StatelessWidget {
     this.titleFontSize = 16.0,
     this.title = '',
     this.icon,
+    this.close,
     this.child,
     this.onTapClose,
     this.titleAlignment = Alignment.centerLeft,
@@ -149,21 +151,23 @@ class LpDialog extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Transform.translate(
-                      offset: Offset(17.0, 0),
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          if (onTapClose != null) {
-                            onTapClose();
-                          }
-                        },
-                        child: SizedBox.fromSize(
-                          size: Size(50.0, 50.0),
-                          child: Icon(Icons.close),
-                        ),
-                      ),
-                    ),
+                    close != null
+                        ? close
+                        : Transform.translate(
+                            offset: Offset(17.0, 0),
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                if (onTapClose != null) {
+                                  onTapClose();
+                                }
+                              },
+                              child: SizedBox.fromSize(
+                                size: Size(50.0, 50.0),
+                                child: Icon(Icons.close),
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               ),
