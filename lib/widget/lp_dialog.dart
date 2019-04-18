@@ -79,9 +79,9 @@ class LpDialog extends StatelessWidget {
   final double borderRadius;
   final double titleBorderWidth;
   final double titleFontSize;
+  final bool noHeader;
   final String title;
   final Widget icon;
-  final Widget close;
   final Widget child;
   final VoidCallback onTapClose;
   final AlignmentGeometry titleAlignment;
@@ -94,9 +94,9 @@ class LpDialog extends StatelessWidget {
     this.borderRadius = 12.0,
     this.titleBorderWidth = 1.0,
     this.titleFontSize = 16.0,
+    this.noHeader,
     this.title = '',
     this.icon,
-    this.close,
     this.child,
     this.onTapClose,
     this.titleAlignment = Alignment.centerLeft,
@@ -105,6 +105,60 @@ class LpDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final children = <Widget>[
+      Expanded(
+        child: child,
+      )
+    ];
+    final header = Container(
+      margin: EdgeInsets.symmetric(horizontal: 17.0),
+      height: 50.0,
+      decoration: BoxDecoration(
+        border: title == '' || titleBorderWidth == 0
+            ? null
+            : Border(
+                bottom: BorderSide(
+                  color: COLOR_GRAY_BORDER,
+                  width: titleBorderWidth,
+                ),
+              ),
+      ),
+      child: Row(
+        children: <Widget>[
+          icon == null ? Container() : icon,
+          Container(
+            width: icon == null ? 0.0 : 13.0,
+          ),
+          Expanded(
+            child: Align(
+              alignment: titleAlignment,
+              child: Text(
+                title,
+                style: TextStyle(fontSize: titleFontSize),
+              ),
+            ),
+          ),
+          Transform.translate(
+            offset: Offset(17.0, 0),
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                if (onTapClose != null) {
+                  onTapClose();
+                }
+              },
+              child: SizedBox.fromSize(
+                size: Size(50.0, 50.0),
+                child: Icon(Icons.close),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (!noHeader) {
+      children.insert(0, header);
+    }
     return LpDialogAnimator(
       distance: alignment == Alignment.bottomCenter ? height : 0,
       child: Align(
@@ -122,59 +176,7 @@ class LpDialog extends StatelessWidget {
                 : BorderRadius.all(Radius.circular(borderRadius)),
           ),
           child: Column(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 17.0),
-                height: 50.0,
-                decoration: BoxDecoration(
-                  border: title == '' || titleBorderWidth == 0
-                      ? null
-                      : Border(
-                          bottom: BorderSide(
-                            color: COLOR_GRAY_BORDER,
-                            width: titleBorderWidth,
-                          ),
-                        ),
-                ),
-                child: Row(
-                  children: <Widget>[
-                    icon == null ? Container() : icon,
-                    Container(
-                      width: icon == null ? 0.0 : 13.0,
-                    ),
-                    Expanded(
-                      child: Align(
-                        alignment: titleAlignment,
-                        child: Text(
-                          title,
-                          style: TextStyle(fontSize: titleFontSize),
-                        ),
-                      ),
-                    ),
-                    close != null
-                        ? close
-                        : Transform.translate(
-                            offset: Offset(17.0, 0),
-                            child: GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                if (onTapClose != null) {
-                                  onTapClose();
-                                }
-                              },
-                              child: SizedBox.fromSize(
-                                size: Size(50.0, 50.0),
-                                child: Icon(Icons.close),
-                              ),
-                            ),
-                          ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: child,
-              )
-            ],
+            children: children,
           ),
         ),
       ),
