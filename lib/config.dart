@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+final STATIC_CACHE_KEY = DateTime.now().millisecondsSinceEpoch.toString();
+
 const FONT_SIZE_BASE = 14.0;
 const APP_BAR_HEIGHT = 44.0;
 
