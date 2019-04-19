@@ -94,7 +94,7 @@ class LpDialog extends StatelessWidget {
     this.borderRadius = 12.0,
     this.titleBorderWidth = 1.0,
     this.titleFontSize = 16.0,
-    this.noHeader,
+    this.noHeader = false,
     this.title = '',
     this.icon,
     this.child,
@@ -159,6 +159,12 @@ class LpDialog extends StatelessWidget {
     if (!noHeader) {
       children.insert(0, header);
     }
+    final dialogBorderRadius = alignment == Alignment.bottomCenter
+        ? BorderRadius.only(
+            topLeft: Radius.circular(borderRadius),
+            topRight: Radius.circular(borderRadius),
+          )
+        : BorderRadius.all(Radius.circular(borderRadius));
     return LpDialogAnimator(
       distance: alignment == Alignment.bottomCenter ? height : 0,
       child: Align(
@@ -168,15 +174,14 @@ class LpDialog extends StatelessWidget {
           width: width,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: alignment == Alignment.bottomCenter
-                ? BorderRadius.only(
-                    topLeft: Radius.circular(borderRadius),
-                    topRight: Radius.circular(borderRadius),
-                  )
-                : BorderRadius.all(Radius.circular(borderRadius)),
+            borderRadius: dialogBorderRadius,
           ),
-          child: Column(
-            children: children,
+          child: Material(
+            color: Colors.white,
+            borderRadius: dialogBorderRadius,
+            child: Column(
+              children: children,
+            ),
           ),
         ),
       ),
