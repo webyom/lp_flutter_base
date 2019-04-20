@@ -87,10 +87,10 @@ class LpDialogBtn extends StatelessWidget {
     this.primary = false,
     this.last = false,
     Color textColor,
-    this.borderColor = const Color(0xffcccccc),
+    this.borderColor = COLOR_GRAY_BORDER,
     this.onPressed,
   })  : this.textColor =
-            textColor ?? (primary ? Color(0xff325fdc) : Color(0xff999999)),
+            textColor ?? (primary ? COLOR_PRIMARY_LIGHT : COLOR_GRAY_TEXT),
         super(key: key);
 
   @override
@@ -105,23 +105,27 @@ class LpDialogBtn extends StatelessWidget {
       child: Container(
         height: 42.0,
         decoration: BoxDecoration(
-          border: Border(
+          border: last ? Border(
+            top: border
+          ) : Border(
             top: border,
-            right: last ? null : border,
+            right: border,
           ),
         ),
         child: FlatButton(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(12.0),
+            borderRadius: last ? BorderRadius.only(
+              bottomRight: const Radius.circular(12.0),
+            ) : BorderRadius.only(
+              bottomLeft: const Radius.circular(12.0),
             ),
           ),
           child: Text(
             text,
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16.0,
               color: textColor,
-              height: 1.3,
             ),
           ),
           onPressed: onPressed,
