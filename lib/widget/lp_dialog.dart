@@ -73,6 +73,64 @@ class _LpDialogAnimatorState extends State<LpDialogAnimator>
   }
 }
 
+class LpDialogBtn extends StatelessWidget {
+  final String text;
+  final bool primary;
+  final bool last;
+  final Color textColor;
+  final Color borderColor;
+  final VoidCallback onPressed;
+
+  LpDialogBtn({
+    Key key,
+    @required this.text,
+    this.primary = false,
+    this.last = false,
+    Color textColor,
+    this.borderColor = const Color(0xffcccccc),
+    this.onPressed,
+  })  : this.textColor =
+            textColor ?? (primary ? Color(0xff325fdc) : Color(0xff999999)),
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final border = BorderSide(
+      color: borderColor,
+      width: 0.5,
+    );
+
+    return Expanded(
+      flex: 1,
+      child: Container(
+        height: 42.0,
+        decoration: BoxDecoration(
+          border: Border(
+            top: border,
+            right: last ? null : border,
+          ),
+        ),
+        child: FlatButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(12.0),
+            ),
+          ),
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 16.0,
+              color: textColor,
+              height: 1.3,
+            ),
+          ),
+          onPressed: onPressed,
+        ),
+      ),
+    );
+  }
+}
+
 class LpDialog extends StatelessWidget {
   final double width;
   final double height;
@@ -89,8 +147,8 @@ class LpDialog extends StatelessWidget {
 
   LpDialog({
     Key key,
-    this.width = double.infinity,
-    this.height,
+    double width,
+    double height,
     this.borderRadius = 12.0,
     this.titleBorderWidth = 1.0,
     this.titleFontSize = 16.0,
@@ -100,8 +158,11 @@ class LpDialog extends StatelessWidget {
     this.child,
     this.onTapClose,
     this.titleAlignment = Alignment.centerLeft,
-    AlignmentGeometry alignment,
-  })  : this.alignment = height == null || alignment == Alignment.center
+  })  : assert(width != double.infinity),
+        assert(height != double.infinity),
+        this.height = height,
+        this.width = width ?? (height == null ? 300.0 : double.infinity),
+        this.alignment = height == null || width != null
             ? Alignment.center
             : Alignment.bottomCenter,
         super(key: key);
@@ -172,8 +233,8 @@ class LpDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
-              height: height,
               width: width,
+              height: height,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: dialogBorderRadius,
