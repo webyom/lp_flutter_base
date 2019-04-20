@@ -90,7 +90,7 @@ class LpDialog extends StatelessWidget {
   LpDialog({
     Key key,
     this.width = double.infinity,
-    this.height = 400.0,
+    this.height,
     this.borderRadius = 12.0,
     this.titleBorderWidth = 1.0,
     this.titleFontSize = 16.0,
@@ -100,16 +100,15 @@ class LpDialog extends StatelessWidget {
     this.child,
     this.onTapClose,
     this.titleAlignment = Alignment.centerLeft,
-    this.alignment = Alignment.bottomCenter,
-  }) : super(key: key);
+    AlignmentGeometry alignment,
+  })  : this.alignment = height == null || alignment == Alignment.center
+            ? Alignment.center
+            : Alignment.bottomCenter,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final children = <Widget>[
-      Expanded(
-        child: child,
-      )
-    ];
+    final children = <Widget>[child];
     final header = Container(
       margin: EdgeInsets.symmetric(horizontal: 17.0),
       height: 50.0,
@@ -166,23 +165,28 @@ class LpDialog extends StatelessWidget {
           )
         : BorderRadius.all(Radius.circular(borderRadius));
     return LpDialogAnimator(
-      distance: alignment == Alignment.bottomCenter ? height : 0,
+      distance: alignment == Alignment.bottomCenter ? (height ?? 0) : 0,
       child: Align(
         alignment: alignment,
-        child: Container(
-          height: height,
-          width: width,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: dialogBorderRadius,
-          ),
-          child: Material(
-            color: Colors.white,
-            borderRadius: dialogBorderRadius,
-            child: Column(
-              children: children,
-            ),
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              height: height,
+              width: width,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: dialogBorderRadius,
+              ),
+              child: Material(
+                color: Colors.white,
+                borderRadius: dialogBorderRadius,
+                child: Column(
+                  children: children,
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
