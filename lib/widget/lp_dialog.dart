@@ -76,6 +76,7 @@ class _LpDialogAnimatorState extends State<LpDialogAnimator>
 class LpDialogBtn extends StatelessWidget {
   final String text;
   final bool primary;
+  final bool first;
   final bool last;
   final Color textColor;
   final Color borderColor;
@@ -85,6 +86,7 @@ class LpDialogBtn extends StatelessWidget {
     Key key,
     @required this.text,
     this.primary = false,
+    this.first = false,
     this.last = false,
     Color textColor,
     this.borderColor = COLOR_GRAY_BORDER,
@@ -114,7 +116,10 @@ class LpDialogBtn extends StatelessWidget {
         ),
         child: FlatButton(
           shape: RoundedRectangleBorder(
-            borderRadius: last ? BorderRadius.only(
+            borderRadius: first && last ? BorderRadius.only(
+              bottomLeft: const Radius.circular(12.0),
+              bottomRight: const Radius.circular(12.0),
+            ) : last ? BorderRadius.only(
               bottomRight: const Radius.circular(12.0),
             ) : BorderRadius.only(
               bottomLeft: const Radius.circular(12.0),
