@@ -21,9 +21,9 @@ abstract class AppInfo {
     locale = appInfo['locale'] ?? locale;
     h5BaseUrl = appInfo['h5BaseUrl'] ?? h5BaseUrl;
     if (isDebug) {
-      staticBaseUrl = 'https://statics.kreditme.id';
-    } else {
       staticBaseUrl = 'https://statics-test.seanla.top';
+    } else {
+      staticBaseUrl = 'https://statics.kreditme.id';
     }
     if (appInfo['apiBaseUrl'] != null) {
       LpHttp().configBaseUrl(appInfo['apiBaseUrl']);
