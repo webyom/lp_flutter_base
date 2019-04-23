@@ -107,23 +107,27 @@ class LpDialogBtn extends StatelessWidget {
       child: Container(
         height: 42.0,
         decoration: BoxDecoration(
-          border: last ? Border(
-            top: border
-          ) : Border(
-            top: border,
-            right: border,
-          ),
+          border: last
+              ? Border(top: border)
+              : Border(
+                  top: border,
+                  right: border,
+                ),
         ),
         child: FlatButton(
           shape: RoundedRectangleBorder(
-            borderRadius: first && last ? BorderRadius.only(
-              bottomLeft: const Radius.circular(12.0),
-              bottomRight: const Radius.circular(12.0),
-            ) : last ? BorderRadius.only(
-              bottomRight: const Radius.circular(12.0),
-            ) : BorderRadius.only(
-              bottomLeft: const Radius.circular(12.0),
-            ),
+            borderRadius: first && last
+                ? BorderRadius.only(
+                    bottomLeft: const Radius.circular(12.0),
+                    bottomRight: const Radius.circular(12.0),
+                  )
+                : last
+                    ? BorderRadius.only(
+                        bottomRight: const Radius.circular(12.0),
+                      )
+                    : BorderRadius.only(
+                        bottomLeft: const Radius.circular(12.0),
+                      ),
           ),
           child: Text(
             text,
@@ -263,16 +267,22 @@ class LpDialog extends StatelessWidget {
   }
 }
 
+/// return false if do not close
+typedef bool LpDialogCloseCallback({
+  @required bool byPressBack,
+  @required bool byTapCover,
+});
+
 class LpDialogContainer extends StatefulWidget {
   final bool visible;
   final Widget child;
-  final VoidCallback onTapCover;
+  final LpDialogCloseCallback onClose;
 
   LpDialogContainer({
     Key key,
     this.visible,
     this.child,
-    this.onTapCover,
+    @required this.onClose,
   }) : super(key: key);
 
   @override
@@ -282,16 +292,66 @@ class LpDialogContainer extends StatefulWidget {
     return context
         .ancestorStateOfType(const TypeMatcher<_LpDialogContainerState>());
   }
+
+  static int visibleAmount() {
+    return _LpDialogContainerState.visibleAmount();
+  }
+
+  static bool closeAll({
+    bool byPressBack = false,
+    bool byTapCover = false,
+  }) {
+    return _LpDialogContainerState.closeAll(
+      byPressBack: byPressBack,
+      byTapCover: byTapCover,
+    );
+  }
 }
 
 class _LpDialogContainerState extends State<LpDialogContainer>
     with SingleTickerProviderStateMixin {
+  bool visible;
   bool _animating = false;
   AnimationController animationController;
+
+  static final List<_LpDialogContainerState> _allDialogStates = [];
+
+  static void _add(_LpDialogContainerState state) {
+    _allDialogStates.add(state);
+  }
+
+  static void _remove(_LpDialogContainerState state) {
+    _allDialogStates.removeWhere((st) => st == state);
+  }
+
+  static int visibleAmount() {
+    return _allDialogStates.where((st) => st.visible).length;
+  }
+
+  static bool closeAll({
+    bool byPressBack = false,
+    bool byTapCover = false,
+  }) {
+    var res = true;
+    for (final state in _allDialogStates) {
+      if (state.visible) {
+        final oneRes = state.widget.onClose(
+          byPressBack: byPressBack,
+          byTapCover: byTapCover,
+        );
+        if (res && !oneRes) {
+          res = false;
+        }
+      }
+    }
+    return res;
+  }
 
   @override
   void initState() {
     super.initState();
+    visible = widget.visible;
+    _add(this);
     animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 300),
@@ -303,12 +363,14 @@ class _LpDialogContainerState extends State<LpDialogContainer>
   void dispose() {
     animationController.removeStatusListener(onAnimationStatusChange);
     animationController.dispose();
+    _remove(this);
     super.dispose();
   }
 
   @override
   void didUpdateWidget(LpDialogContainer oldWidget) {
     super.didUpdateWidget(oldWidget);
+    visible = widget.visible;
     if (!oldWidget.visible && widget.visible) {
       animationController.forward();
     } else if (oldWidget.visible && !widget.visible) {
@@ -341,9 +403,10 @@ class _LpDialogContainerState extends State<LpDialogContainer>
                   bottom: 0,
                   child: GestureDetector(
                     onTap: () {
-                      if (widget.onTapCover != null) {
-                        widget.onTapCover();
-                      }
+                      widget.onClose(
+                        byTapCover: true,
+                        byPressBack: false,
+                      );
                     },
                     child: AnimatedBuilder(
                       animation: animationController,

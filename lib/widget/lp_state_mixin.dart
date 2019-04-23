@@ -32,13 +32,13 @@ mixin LpStateMixin<T extends StatefulWidget> on State<T> {
     Key key,
     @required bool visible,
     @required Widget child,
-    VoidCallback onTapCover,
+    @required LpDialogCloseCallback onClose,
   }) {
     return LpDialogContainer(
       key: key,
       visible: visible,
       child: child,
-      onTapCover: onTapCover,
+      onClose: onClose,
     );
   }
 
