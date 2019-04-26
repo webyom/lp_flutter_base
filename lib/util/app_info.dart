@@ -12,6 +12,10 @@ abstract class AppInfo {
   static String h5BaseUrl;
   static String staticBaseUrl;
 
+  static bool get isLoggedIn {
+    return token != null && token.isNotEmpty;
+  }
+
   static void config(Map appInfo) {
     final oldLocale = locale;
     isDebug = appInfo['isDebug'] ?? isDebug;
