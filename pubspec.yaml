@@ -1,6 +1,6 @@
 name: lp_flutter_base
 description: A new Flutter package project.
-version: 1.2.1
+version: 1.3.0
 author:
 homepage:
 
@@ -17,7 +17,7 @@ dependencies:
   hybrid_stack_manager:
     git:
       url: https://github.com/webyom/hybrid_stack_manager.git
-      ref: v0.1.1
+      ref: v0.2.0
 
 dev_dependencies:
   flutter_test:
