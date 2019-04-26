@@ -433,6 +433,10 @@ class _LpDialogContainerState extends State<LpDialogContainer>
               fit: StackFit.expand,
             ),
           )
-        : Container();
+        : Positioned(
+            width: 0,
+            height: 0,
+            child: Container(),
+          );
   }
 }

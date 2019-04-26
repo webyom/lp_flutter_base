@@ -99,6 +99,10 @@ class LpLoading extends StatelessWidget {
               fit: StackFit.expand,
             ),
           )
-        : Container();
+        : Positioned(
+            width: 0,
+            height: 0,
+            child: Container(),
+          );
   }
 }
