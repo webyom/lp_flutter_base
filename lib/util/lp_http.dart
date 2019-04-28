@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'i18n.dart';
 import 'util.dart';
 
 class LpHttpError extends Error {
@@ -62,8 +63,7 @@ class LpHttp {
 
   void _dealCommonError(Response<Map<String, dynamic>> res) {
     int code = res.data['code'];
-    String message = res.data['msg'];
-    if (code == 0) {
+    if (code == null || code == 0) {
       return;
     }
     if ([
@@ -73,6 +73,7 @@ class LpHttp {
     ].contains(code)) {
       callNativeMethod('gotoLogin');
     }
+    String message = res.data['msg'] ?? $i18n('common.msg.svrErr');
     throw LpHttpError(code, message);
   }
 
