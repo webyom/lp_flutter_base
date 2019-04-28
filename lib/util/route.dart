@@ -20,14 +20,24 @@ class AppRoute {
   }
 
   static void openUrl({
-    String url,
+    @required String url,
     Map query,
     Map params,
     bool animated,
   }) {
+    String openUrl;
+    final openQuery = query ?? {};
+    if (url.startsWith('/')) {
+      openUrl = 'hrd:/' + url;
+    } else if (url.startsWith('http')) {
+      openUrl = 'hrd://native/web_common';
+      openQuery['url'] = url;
+    } else {
+      openUrl = url;
+    }
     HybridStackManagerPlugin.hybridStackManagerPlugin.openUrlFromNative(
-      url: url,
-      query: query,
+      url: openUrl,
+      query: openQuery,
       params: params,
       animated: animated,
     );
