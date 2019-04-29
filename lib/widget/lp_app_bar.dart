@@ -6,6 +6,7 @@ class LpAppBar extends AppBar {
   LpAppBar({
     Key key,
     List<Widget> actions,
+    Widget leading,
     String titleText = '',
     Color titleColor,
     Color backgroundColor = Colors.white,
@@ -15,7 +16,7 @@ class LpAppBar extends AppBar {
   }) : super(
           key: key,
           actions: actions,
-          leading: FlatButton(
+          leading: leading ?? FlatButton(
             padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
             highlightColor: Color(0x00000000),
             splashColor: Color(0x00000000),
