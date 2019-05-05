@@ -155,7 +155,8 @@ class LpDialog extends StatelessWidget {
   final Widget icon;
   final Widget child;
   final VoidCallback onTapClose;
-  final AlignmentGeometry titleAlignment;
+  final Color titleColor;
+  final TextAlign titleTextAlignment;
   final AlignmentGeometry alignment;
 
   LpDialog({
@@ -170,7 +171,8 @@ class LpDialog extends StatelessWidget {
     this.icon,
     this.child,
     this.onTapClose,
-    this.titleAlignment = Alignment.centerLeft,
+    this.titleColor,
+    TextAlign titleTextAlignment,
   })  : assert(width != double.infinity),
         assert(height != double.infinity),
         this.height = height,
@@ -178,6 +180,8 @@ class LpDialog extends StatelessWidget {
         this.alignment = height == null || width != null
             ? Alignment.center
             : Alignment.bottomCenter,
+        this.titleTextAlignment = titleTextAlignment ??
+            (icon == null ? TextAlign.center : TextAlign.left),
         super(key: key);
 
   @override
@@ -196,23 +200,37 @@ class LpDialog extends StatelessWidget {
                 ),
               ),
       ),
-      child: Row(
+      child: Stack(
+        overflow: Overflow.visible,
         children: <Widget>[
-          icon == null ? Container() : icon,
-          Container(
-            width: icon == null ? 0.0 : 13.0,
-          ),
-          Expanded(
-            child: Align(
-              alignment: titleAlignment,
-              child: Text(
-                title,
-                style: TextStyle(fontSize: titleFontSize),
+          Row(
+            children: <Widget>[
+              icon == null ? Container() : icon,
+              Container(
+                width: icon == null ? 0.0 : 13.0,
               ),
-            ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      titleTextAlignment == TextAlign.center ? 15.0 : 0,
+                      0,
+                      15.0,
+                      0),
+                  child: Text(
+                    title,
+                    textAlign: titleTextAlignment,
+                    style: TextStyle(
+                      fontSize: titleFontSize,
+                      color: titleColor,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          Transform.translate(
-            offset: Offset(17.0, 0),
+          Positioned(
+            right: -17.0,
+            top: 0,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
