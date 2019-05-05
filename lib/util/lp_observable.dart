@@ -1,6 +1,6 @@
 typedef void LpObserver<D>(D data);
 
-abstract class LpObservable<C, D> {
+class LpObservable<C, D> {
   final _observers = <C, List<LpObserver<D>>>{};
 
   void observe(C change, LpObserver<D> observer) {
@@ -16,7 +16,7 @@ abstract class LpObservable<C, D> {
     }
   }
 
-  void _notify(C change, D data) {
+  void notify(C change, D data) {
     if (_observers.containsKey(change)) {
       _observers[change].forEach((observer) => observer(data));
     }
