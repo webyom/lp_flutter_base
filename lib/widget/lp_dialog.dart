@@ -186,7 +186,7 @@ class LpDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final children = <Widget>[child];
+    final children = <Widget>[height != null ? Expanded(child: child) : child];
     final header = Container(
       margin: EdgeInsets.symmetric(horizontal: 17.0),
       height: 50.0,
