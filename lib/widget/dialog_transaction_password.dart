@@ -75,8 +75,8 @@ class _TransactionPasswordDialogWidgetState
       height: 420.0,
       borderRadius: 0,
       title: _failed
-          ? $i18n('transaction.msg.wrongPassword')
-          : $i18n('transaction.msg.inputPassword'),
+          ? $i18n('widget.msg.wrongTransactionPassword')
+          : $i18n('widget.msg.inputTransactionPassword'),
       titleColor: _failed ? Colors.red : Colors.black,
       titleFontSize: 13.0,
       titleBorderWidth: 0,

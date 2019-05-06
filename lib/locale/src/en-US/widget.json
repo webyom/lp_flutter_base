@@ -1,0 +1,7 @@
+{
+  "label": {},
+  "msg": {
+    "inputTransactionPassword": "Please type the transaction password",
+    "wrongTransactionPassword": "Wrong password, please type again"
+  }
+}

@@ -1,10 +1,14 @@
 import 'package:lp_flutter_base/lp_flutter_base.dart';
 import 'build/common.dart';
+import 'build/widget.dart';
 
 Map<String, LocaleGetter> _localeMap = {
   'common_id-ID': LocaleCommon.of('id-ID'),
   'common_zh-CN': LocaleCommon.of('zh-CN'),
   'common': LocaleCommon.of('en-US'),
+  'widget_id-ID': LocaleWidget.of('id-ID'),
+  'widget_zh-CN': LocaleWidget.of('zh-CN'),
+  'widget': LocaleWidget.of('en-US'),
 };
 
 class LocaleGetter {

@@ -1,0 +1,7 @@
+{
+  "label": {},
+  "msg": {
+    "inputTransactionPassword": "请输入支付密码",
+    "wrongTransactionPassword": "支付密码错误，请重新输入"
+  }
+}

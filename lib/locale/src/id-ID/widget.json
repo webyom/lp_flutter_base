@@ -1,0 +1,7 @@
+{
+  "label": {},
+  "msg": {
+    "inputTransactionPassword": "Silakan masukkan kata sandi transaksi",
+    "wrongTransactionPassword": "Kata sandi salah, Silakan masukkan kembali"
+  }
+}
