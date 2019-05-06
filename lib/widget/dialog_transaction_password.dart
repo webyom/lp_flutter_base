@@ -7,11 +7,13 @@ import 'widget.dart';
 typedef void OnTransactionPasswordSuccess(String pwd);
 
 class TransactionPasswordDialogWidget extends StatefulWidget {
+  final bool init;
   final VoidCallback onTapClose;
   final OnTransactionPasswordSuccess onSuccess;
 
   TransactionPasswordDialogWidget({
     Key key,
+    this.init = false,
     @required this.onTapClose,
     @required this.onSuccess,
   }) : super(key: key);
@@ -27,6 +29,7 @@ class _TransactionPasswordDialogWidgetState
   final _pwdLength = 6;
   bool _failed = false;
   final List<String> _inputs = [];
+  String _initPwd;
 
   void _doInput(String n) async {
     if (_inputs.length >= _pwdLength) {
@@ -35,25 +38,47 @@ class _TransactionPasswordDialogWidgetState
     _inputs.add(n);
     setState(() {});
     if (_inputs.length == _pwdLength) {
-      try {
-        final pwd = _inputs.join('');
-        final res = await LpHttp().post(
-          '/client/v1/membership/user/validate-trans-password',
-          data: {
-            'transactionPassword': pwd,
-          },
-        );
-        if (res.data['data'] as int == 1) {
-          widget.onSuccess(pwd);
+      final pwd = _inputs.join('');
+      if (widget.init) {
+        if (_initPwd == null) {
+          _initPwd = pwd;
+          setState(() {});
         } else {
-          setState(() {
-            _failed = true;
-          });
+          // compare two inputed pwd
+          if (_initPwd == pwd) {
+            setState(() {
+              _failed = false;
+            });
+            widget.onSuccess(pwd);
+          } else {
+            setState(() {
+              _failed = true;
+            });
+          }
         }
-      } on LpHttpError catch (err) {
-        showError(err.message);
-      } catch (err) {
-        showError($i18n('common.msg.svrErr'));
+      } else {
+        try {
+          final res = await LpHttp().post(
+            '/client/v1/membership/user/validate-trans-password',
+            data: {
+              'transactionPassword': pwd,
+            },
+          );
+          if (res.data['data'] as int == 1) {
+            setState(() {
+              _failed = false;
+            });
+            widget.onSuccess(pwd);
+          } else {
+            setState(() {
+              _failed = true;
+            });
+          }
+        } on LpHttpError catch (err) {
+          showError(err.message);
+        } catch (err) {
+          showError($i18n('common.msg.svrErr'));
+        }
       }
       _clearInput();
     }
@@ -71,8 +96,25 @@ class _TransactionPasswordDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
+    String msg;
+    if (widget.init) {
+      if (_failed) {
+        msg = $i18n('widget.msg.transactionPasswordDifferent');
+      } else if (_initPwd == null) {
+        msg = $i18n('widget.msg.setTransactionPassword');
+      } else {
+        msg = $i18n('widget.msg.inputTransactionPasswordAgain');
+      }
+    } else {
+      if (_failed) {
+        msg = $i18n('widget.msg.wrongTransactionPassword');
+      } else {
+        msg = $i18n('widget.msg.inputTransactionPassword');
+      }
+    }
+
     return LpDialog(
-      height: 440.0,
+      height: 425.0,
       borderRadius: 0,
       title: '',
       titleFontSize: 13.0,
@@ -82,12 +124,10 @@ class _TransactionPasswordDialogWidgetState
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0),
+            padding: EdgeInsets.only(left: 20.0, right: 20.0),
             child: Center(
               child: Text(
-                _failed
-                    ? $i18n('widget.msg.wrongTransactionPassword')
-                    : $i18n('widget.msg.inputTransactionPassword'),
+                msg,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: _failed ? Colors.red : Colors.black,
@@ -110,16 +150,19 @@ class _TransactionPasswordDialogWidgetState
           ),
           Expanded(
             child: Center(
-              child: GestureDetector(
+              child: widget.init ? null : GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
                   AppRoute.openUrl(url: '/reset_transaction_password');
                 },
-                child: Text(
-                  $i18n('widget.msg.forgotTransactionPassword'),
-                  style: TextStyle(
-                    color: COLOR_PRIMARY_LIGHT,
-                    fontSize: 12.0,
+                child: Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: Text(
+                    $i18n('widget.msg.forgotTransactionPassword'),
+                    style: TextStyle(
+                      color: COLOR_PRIMARY_LIGHT,
+                      fontSize: 12.0,
+                    ),
                   ),
                 ),
               ),

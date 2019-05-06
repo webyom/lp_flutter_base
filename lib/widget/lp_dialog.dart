@@ -318,11 +318,11 @@ class LpDialogContainer extends StatefulWidget {
     return _LpDialogContainerState.visibleAmount();
   }
 
-  static bool closeAll({
+  static bool closeAllVisible({
     bool byPressBack = false,
     bool byTapCover = false,
   }) {
-    return _LpDialogContainerState.closeAll(
+    return _LpDialogContainerState.closeAllVisible(
       byPressBack: byPressBack,
       byTapCover: byTapCover,
     );
@@ -349,7 +349,7 @@ class _LpDialogContainerState extends State<LpDialogContainer>
     return _allDialogStates.where((st) => st.visible && st.widget.routeName == Router.currentRouteName).length;
   }
 
-  static bool closeAll({
+  static bool closeAllVisible({
     bool byPressBack = false,
     bool byTapCover = false,
   }) {

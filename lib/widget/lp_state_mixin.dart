@@ -31,14 +31,14 @@ mixin LpStateMixin<T extends StatefulWidget> on State<T> {
 
   Widget buildDialog({
     Key key,
-    String routeName,
+    @required String routeName,
     @required bool visible,
     @required Widget child,
     @required LpDialogCloseCallback onClose,
   }) {
     return LpDialogContainer(
       key: key,
-      routeName: routeName ?? Router.currentRouteName,
+      routeName: routeName,
       visible: visible,
       child: child,
       onClose: onClose,
