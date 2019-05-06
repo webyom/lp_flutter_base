@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hybrid_stack_manager/hybrid_stack_manager_plugin.dart';
 import '../config.dart';
 
 class LpDialogAnimator extends StatefulWidget {
@@ -292,12 +293,14 @@ typedef bool LpDialogCloseCallback({
 });
 
 class LpDialogContainer extends StatefulWidget {
+  final String routeName;
   final bool visible;
   final Widget child;
   final LpDialogCloseCallback onClose;
 
   LpDialogContainer({
     Key key,
+    this.routeName,
     this.visible,
     this.child,
     @required this.onClose,
@@ -343,7 +346,7 @@ class _LpDialogContainerState extends State<LpDialogContainer>
   }
 
   static int visibleAmount() {
-    return _allDialogStates.where((st) => st.visible).length;
+    return _allDialogStates.where((st) => st.visible && st.widget.routeName == Router.currentRouteName).length;
   }
 
   static bool closeAll({

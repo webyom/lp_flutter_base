@@ -218,11 +218,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v0.2.0"
-      resolved-ref: "7f1a0eb30bcabbb6adf0c7bf1d8cdaba6a8080e6"
+      ref: "v0.4.0"
+      resolved-ref: "54cc518802506eb8c66219510c08a05ccde38927"
       url: "https://github.com/webyom/hybrid_stack_manager.git"
     source: git
-    version: "0.2.0"
+    version: "0.4.0"
   intl:
     dependency: "direct main"
     description:

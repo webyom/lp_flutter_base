@@ -1,7 +1,11 @@
 {
   "label": {},
   "msg": {
+    "forgotTransactionPassword": "Forgot Transaction Password?",
     "inputTransactionPassword": "Please type the transaction password",
+    "inputTransactionPasswordAgain": "Please enter the transaction password again",
+    "setTransactionPassword": "Please set a 6-digit app transaction password to protect your transaction security (do not enter your bank transaction password)",
+    "transactionPasswordDifferent": "The two passwords are different, please type again",
     "wrongTransactionPassword": "Wrong password, please type again"
   }
 }

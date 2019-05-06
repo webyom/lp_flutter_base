@@ -72,18 +72,30 @@ class _TransactionPasswordDialogWidgetState
   @override
   Widget build(BuildContext context) {
     return LpDialog(
-      height: 420.0,
+      height: 440.0,
       borderRadius: 0,
-      title: _failed
-          ? $i18n('widget.msg.wrongTransactionPassword')
-          : $i18n('widget.msg.inputTransactionPassword'),
-      titleColor: _failed ? Colors.red : Colors.black,
+      title: '',
       titleFontSize: 13.0,
       titleBorderWidth: 0,
       onTapClose: widget.onTapClose,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(left: 10.0, right: 10.0),
+            child: Center(
+              child: Text(
+                _failed
+                    ? $i18n('widget.msg.wrongTransactionPassword')
+                    : $i18n('widget.msg.inputTransactionPassword'),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: _failed ? Colors.red : Colors.black,
+                  fontSize: 12.0,
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: EdgeInsets.only(top: 10.0),
             child: Row(
@@ -100,8 +112,11 @@ class _TransactionPasswordDialogWidgetState
             child: Center(
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  AppRoute.openUrl(url: '/reset_transaction_password');
+                },
                 child: Text(
-                  'Forget Transaction Password?',
+                  $i18n('widget.msg.forgotTransactionPassword'),
                   style: TextStyle(
                     color: COLOR_PRIMARY_LIGHT,
                     fontSize: 12.0,

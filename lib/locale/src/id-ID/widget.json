@@ -1,7 +1,11 @@
 {
   "label": {},
   "msg": {
+    "forgotTransactionPassword": "Lupa Sandi Transaksi?",
     "inputTransactionPassword": "Silakan masukkan kata sandi transaksi",
+    "inputTransactionPasswordAgain": "Silakan masukkan security code sekali lagi",
+    "setTransactionPassword": "Harap masukkan security code aplikasi sebanyak 6 digit untuk melindungi keamanan transaksi kamu(Bedakan dengan kata sandi bank kamu)",
+    "transactionPasswordDifferent": "Dua masukan kata sandi tidak konsisten，silsakan masukkan kembali",
     "wrongTransactionPassword": "Kata sandi salah, Silakan masukkan kembali"
   }
 }
