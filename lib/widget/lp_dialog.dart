@@ -355,7 +355,7 @@ class _LpDialogContainerState extends State<LpDialogContainer>
   }) {
     var res = true;
     for (final state in _allDialogStates) {
-      if (state.visible) {
+      if (state.visible && state.widget.routeName == Router.currentRouteName) {
         final oneRes = state.widget.onClose(
           byPressBack: byPressBack,
           byTapCover: byTapCover,
