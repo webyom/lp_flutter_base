@@ -125,3 +125,32 @@ String interpolateTemplate(
   });
   return res.join('');
 }
+
+String hidePartOfString(
+  String str, {
+  String replacement = '*',
+  int startIndex = 0,
+  int endIndex = -4,
+  int splitSteps = 4,
+  String splitBy = ' ',
+}) {
+  assert(str != null);
+  assert(endIndex <= 0);
+  assert(splitSteps >= 0);
+  final l = str.length;
+  if (startIndex - endIndex >= l) {
+    return str;
+  }
+  final tmp = <String>[];
+  str.split('').asMap().forEach((i, x) {
+    if (i < startIndex || i >= l + endIndex) {
+      tmp.add(x);
+    } else {
+      tmp.add(replacement);
+    }
+    if (splitSteps > 0 && (i + 1) % splitSteps == 0 && i != l - 1) {
+      tmp.add(splitBy);
+    }
+  });
+  return tmp.join('');
+}

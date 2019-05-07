@@ -6,4 +6,5 @@ export 'lp_loading.dart';
 export 'lp_dialog.dart';
 export 'lp_network_image.dart';
 export 'lp_option_box.dart';
+export 'lp_label_field.dart';
 export 'real_rich_text.dart';
