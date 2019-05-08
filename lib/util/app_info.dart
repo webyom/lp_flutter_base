@@ -3,6 +3,7 @@ import 'i18n.dart';
 
 abstract class AppInfo {
   static bool isDebug;
+  static String httpProxy;
   static String token;
   static String userAgent;
   static String brandName;
@@ -19,6 +20,7 @@ abstract class AppInfo {
   static void config(Map appInfo) {
     final oldLocale = locale;
     isDebug = appInfo['isDebug'] ?? isDebug;
+    httpProxy = appInfo['httpProxy'] ?? httpProxy;
     token = appInfo['token'] ?? token;
     brandName = appInfo['brandName'] ?? brandName;
     appChannel = appInfo['appChannel'] ?? appChannel;

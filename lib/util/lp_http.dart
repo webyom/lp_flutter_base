@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'i18n.dart';
 import 'util.dart';
@@ -30,7 +31,23 @@ class LpHttp {
 
   final Dio _dio;
 
-  LpHttp.fromOptions(BaseOptions baseOptions) : _dio = Dio(baseOptions);
+  LpHttp.fromOptions(BaseOptions baseOptions) : _dio = Dio(baseOptions) {
+    if (AppInfo.isDebug) {
+      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (client) {
+        client.badCertificateCallback = (cert, host, port) {
+          return Platform.isAndroid;
+        };
+        client.findProxy = (uri) {
+          if (AppInfo.httpProxy != null && AppInfo.httpProxy != '') {
+            return 'PROXY ${AppInfo.httpProxy}';
+          } else {
+            return 'DIRECT';
+          }
+        };
+      };
+    }
+  }
 
   factory LpHttp() => _instance;
 
