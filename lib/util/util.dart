@@ -42,6 +42,9 @@ String formatCurrency(
   int digits,
   String currency = 'Rp',
 }) {
+  if (amount == null) {
+    return null;
+  }
   if (digits == null) {
     if (currency == 'Rp') {
       digits = 0;
