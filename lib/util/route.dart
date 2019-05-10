@@ -29,9 +29,6 @@ class AppRoute {
     final openQuery = query ?? {};
     if (url.startsWith('/')) {
       openUrl = 'hrd:/' + url;
-    } else if (url.startsWith('http')) {
-      openUrl = 'hrd://native/web_common';
-      openQuery['url'] = url;
     } else {
       openUrl = url;
     }
