@@ -8,6 +8,8 @@ abstract class AppInfo {
   static String userAgent;
   static String brandName;
   static String appChannel;
+  static String version;
+  static String deviceId;
   static String locale;
   static String apiBaseUrl;
   static String h5BaseUrl;
@@ -25,6 +27,8 @@ abstract class AppInfo {
     brandName = appInfo['brandName'] ?? brandName;
     appChannel = appInfo['appChannel'] ?? appChannel;
     locale = appInfo['locale'] ?? locale;
+    version = appInfo['version'] ?? version;
+    deviceId = appInfo['deviceId'] ?? deviceId;
     h5BaseUrl = appInfo['h5BaseUrl'] ?? h5BaseUrl;
     if (isDebug) {
       staticBaseUrl = 'https://statics-test.seanla.top';
