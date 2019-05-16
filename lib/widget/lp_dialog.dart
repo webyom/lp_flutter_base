@@ -28,7 +28,7 @@ class _LpDialogAnimatorState extends State<LpDialogAnimator>
       vsync: this,
       duration: Duration(milliseconds: 300),
     );
-    animationController.animateTo(1.0, curve: Curves.linear);
+    animationController.animateTo(1.0, curve: Curves.ease);
     containerAnimationController =
         LpDialogContainer.of(context).animationController;
     containerAnimationController
@@ -46,7 +46,7 @@ class _LpDialogAnimatorState extends State<LpDialogAnimator>
 
   void onContainerAnimationStatusChange(AnimationStatus status) {
     if (status == AnimationStatus.reverse) {
-      animationController.animateTo(0, curve: Curves.linear);
+      animationController.animateTo(0, curve: Curves.ease.flipped);
     }
   }
 
