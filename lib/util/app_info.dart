@@ -2,7 +2,7 @@ import 'lp_http.dart';
 import 'i18n.dart';
 
 abstract class AppInfo {
-  static bool isDebug;
+  static bool isDebug = true;
   static String httpProxy;
   static String token;
   static String userAgent;
