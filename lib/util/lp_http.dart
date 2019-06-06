@@ -32,7 +32,7 @@ class LpHttp {
   final Dio _dio;
 
   LpHttp.fromOptions(BaseOptions baseOptions) : _dio = Dio(baseOptions) {
-    if (AppInfo.isDebug) {
+    if (AppInfo.isDebug || AppInfo.appChannel == 'rc-integration') {
       (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.badCertificateCallback = (cert, host, port) {
