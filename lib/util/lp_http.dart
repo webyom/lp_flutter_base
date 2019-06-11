@@ -32,12 +32,12 @@ class LpHttp {
   final Dio _dio;
 
   LpHttp.fromOptions(BaseOptions baseOptions) : _dio = Dio(baseOptions) {
-    if (AppInfo.isDebug || AppInfo.appChannel == 'rc-integration') {
-      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-          (client) {
-        client.badCertificateCallback = (cert, host, port) {
-          return Platform.isAndroid;
-        };
+    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      client.badCertificateCallback = (cert, host, port) {
+        return AppInfo.apiBaseUrl != null && AppInfo.apiBaseUrl.indexOf('/' + host) > 0;
+      };
+      if (AppInfo.isDebug || AppInfo.appChannel == 'rc-integration') {
         client.findProxy = (uri) {
           if (AppInfo.httpProxy != null && AppInfo.httpProxy != '') {
             return 'PROXY ${AppInfo.httpProxy}';
@@ -45,8 +45,8 @@ class LpHttp {
             return 'DIRECT';
           }
         };
-      };
-    }
+      }
+    };
   }
 
   factory LpHttp() => _instance;
