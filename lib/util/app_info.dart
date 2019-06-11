@@ -36,7 +36,8 @@ abstract class AppInfo {
       staticBaseUrl = 'https://statics.kreditme.id';
     }
     if (appInfo['apiBaseUrl'] != null) {
-      LpHttp().configBaseUrl(appInfo['apiBaseUrl']);
+      apiBaseUrl = appInfo['apiBaseUrl'];
+      LpHttp().configBaseUrl(apiBaseUrl);
     }
     if (appInfo['userAgent'] != null) {
       userAgent = appInfo['userAgent'] + ' Flutter';

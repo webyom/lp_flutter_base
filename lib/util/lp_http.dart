@@ -37,13 +37,9 @@ class LpHttp {
       client.badCertificateCallback = (cert, host, port) {
         return AppInfo.apiBaseUrl != null && AppInfo.apiBaseUrl.indexOf('/' + host) > 0;
       };
-      if (AppInfo.isDebug || AppInfo.appChannel == 'rc-integration') {
+      if (AppInfo.httpProxy != null && AppInfo.httpProxy != '') {
         client.findProxy = (uri) {
-          if (AppInfo.httpProxy != null && AppInfo.httpProxy != '') {
-            return 'PROXY ${AppInfo.httpProxy}';
-          } else {
-            return 'DIRECT';
-          }
+          return 'PROXY ${AppInfo.httpProxy}';
         };
       }
     };
