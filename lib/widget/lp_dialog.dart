@@ -346,7 +346,10 @@ class _LpDialogContainerState extends State<LpDialogContainer>
   }
 
   static int visibleAmount() {
-    return _allDialogStates.where((st) => st.visible && st.widget.routeName == Router.currentRouteName).length;
+    return _allDialogStates
+        .where((st) =>
+            st.visible && st.widget.routeName == Router.currentRouteName)
+        .length;
   }
 
   static bool closeAllVisible({
@@ -368,6 +371,10 @@ class _LpDialogContainerState extends State<LpDialogContainer>
     return res;
   }
 
+  void checkGestureBack() {
+    HybridStackManagerPlugin.hybridStackManagerPlugin.toggleGestureBack(LpDialogContainer.visibleAmount() == 0);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -385,6 +392,7 @@ class _LpDialogContainerState extends State<LpDialogContainer>
     animationController.removeStatusListener(onAnimationStatusChange);
     animationController.dispose();
     _remove(this);
+    checkGestureBack();
     super.dispose();
   }
 
@@ -409,6 +417,7 @@ class _LpDialogContainerState extends State<LpDialogContainer>
 
   @override
   Widget build(BuildContext context) {
+    checkGestureBack();
     return widget.visible || _animating
         ? Positioned(
             left: 0,
@@ -460,4 +469,30 @@ class _LpDialogContainerState extends State<LpDialogContainer>
             child: Container(),
           );
   }
+}
+
+Future showLpDialog({
+  @required BuildContext context,
+  WidgetBuilder builder,
+}) {
+  HybridStackManagerPlugin.hybridStackManagerPlugin.toggleGestureBack(false);
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: builder,
+  );
+}
+
+void hideLpDialog(BuildContext context) {
+  var popped = false;
+  Navigator.of(context, rootNavigator: true).popUntil((route) {
+    if (popped || route is XMaterialPageRoute) {
+      return true;
+    }
+    popped = true;
+    if (LpDialogContainer.visibleAmount() == 0) {
+      HybridStackManagerPlugin.hybridStackManagerPlugin.toggleGestureBack(true);
+    }
+    return false;
+  });
 }
